@@ -1,13 +1,15 @@
 import React from 'react'
+import styled from 'styled-components'
 
-export default function Container({ children, style }) {
+export const StyledContainer = styled.div`
+    width: 85%;
+    margin: 0 auto;
+`
+
+export default function Container({ children }) {
     return (
-        <div style={{
-            width: '85%',
-            margin: '0 auto',
-            ...style
-        }}>
+        <StyledContainer>
             {children}
-        </div>
+        </StyledContainer>
     )
 }

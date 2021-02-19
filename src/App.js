@@ -1,17 +1,17 @@
 import React from "react";
 import "./App.css";
+
 import axios from 'axios'
 
-import Header from './components/Header'
-import Footer from './components/Footer'
-import Container from './components/Container'
+import Layout from './components/Layout'
 import APOD from './components/APOD/APOD'
 
 function App() {
   const [data, setData] = React.useState(null)
   
   React.useEffect(() => {
-    axios.get(`https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&concept_tags=True`)
+    const getApodData = () => {
+      axios.get(`https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&concept_tags=True`)
       .then(res => {
         console.log(res.data.date)
         setData(res.data)
@@ -19,17 +19,16 @@ function App() {
       .catch(err => {
         console.log(err)
       })
-  }, [])
+    }
+
+    getApodData()
+  }, []) /* eslint-disable-line */
   return (
     <div className="App">
-      <Header />
-      <Container style={{
-        marginTop: '75px'
-      }}>
+      <Layout>
         {data === null && <h3>Loading...</h3>}
         {data !== null && <APOD date={data.date} url={data.url} explanation={data.explanation} title={data.title}/>}
-      </Container>
-      <Footer />
+      </Layout>
     </div>
   );
 }

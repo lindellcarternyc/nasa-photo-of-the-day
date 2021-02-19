@@ -1,26 +1,35 @@
 import React from 'react'
-import { format } from 'date-fns'
+import styled from 'styled-components'
 
-const createDate = (dateString) => {
-    console.log('createDate', { dateString })
+const formatDate = (dateString) => {
+    const [y, m, d] = dateString.split('-')
+    return new Date(`${m}/${d}/${y}`).toDateString()
 }
 
-export default function APOD({ date, explanation, url, title }) {
-    const dateString = new Date(date).toDateString(0)
-    // TODO: 'FIX DATE FORMATTING'
+const Wrapper = styled.div`
+    h3 {
+        font-size: 2.5rem;
+        margin: 0;
+        font-weight: 100;
+    }
 
-    // console.log(date, dateString, new Date(date))
-    // // console.log('test', format(date, 'YYYY'))
-    // const createdDate = createDate(date)
-    // console.log({ createdDate })
-    // // const formatted = format(createDate, 'YYYY')
-    // // console.log(formatted)
+    & > img {
+        width: 100%;
+    }
+
+    & > p:nth-of-type(2) {
+        text-align: left;
+    }
+`
+
+export default function APOD({ date, explanation, url, title }) {
+    const dateString = formatDate(date)
     return (
-        <>
+        <Wrapper>
             <h3>{title}</h3>
             <p>{dateString}</p>
-            <img src={url} alt="APOD pic" style={{ width: '100%' }}/>
-            <p style={{ textAlign: 'justify', padding: '0 1rem' }}>&nbsp;&nbsp;&nbsp;&nbsp;{explanation}</p>
-        </>
+            <img src={url} alt="APOD pic" />
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;{explanation}</p>
+        </Wrapper>
     )
 }
